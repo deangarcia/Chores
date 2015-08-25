@@ -1,5 +1,6 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 //Use flowLayout for more customization
 //import java.awt.FlowLayout;
 import java.awt.GridLayout;
@@ -16,11 +17,14 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
+
 
 public class ChoreProgram extends JFrame
 {
-	JPanel  pan;
+	JPanel  wholeGrid;
 	
 	// Fifteen different rooms or sections of the house that can be cleaned
 	// PLD = P for room idk and LD is Leviathyn and Damien
@@ -38,141 +42,109 @@ public class ChoreProgram extends JFrame
 	{	
 		// JPanel is kind of like a table
 		// This is our base Panel 
-		pan = new JPanel();
+		wholeGrid = new JPanel();
 		
 		//1
 		livingRoom = new JButton();
 		livingRoom.setIcon(new ImageIcon("C:\\Users\\Dean\\workspace\\Chores\\img\\livingRoom.jpg"));
-		pan.add(livingRoom);
+		wholeGrid.add(livingRoom);
 		
-		livingRoom.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent arg0) 
-			{	
-				// Want to load in Defaults From .txt and then 
-				// when instantiating the text field compare default 
-				// text to valid values and depending on what it is 
-				// disable it and set the right color
-				
-				// Set old panel visibility to false 
-				pan.setVisible(false);
-				
-				// Create new panel with chore list
-				PlivingRoom = new JPanel();
-				JLabel temp;
-				temp = new JLabel("Living Room");
-				PlivingRoom.add(temp);
-				add(PlivingRoom);
-				
-				// Main Menu Back Button
-				JButton done;
-				done = new JButton("Back");
-				PlivingRoom.add(done);
-				done.addActionListener(new ActionListener()
-				{
-					public void actionPerformed(ActionEvent arg0) 
-					{
-						PlivingRoom.setVisible(false);
-						pan.setVisible(true);
-					}
-				});
-				
-				// Clean TV Stand Text Field
-				JTextField CleanTVStand = new JTextField(10);
-				PlivingRoom.add(CleanTVStand);
-				CleanTVStand.addActionListener(new ActionListener()
-				{
-					public void actionPerformed(ActionEvent arg0) 
-					{
-						// Save name to file along with a time stap and name of the chore
-						// Instead of getting on Enter get it on button with the actual chore name and possibly value
-						// Then disable that button whenever the text field is Green or whatever
-						String input = CleanTVStand.getText();
-						System.out.println(input);
-						CleanTVStand.setEditable(false);
-						CleanTVStand.setBackground(Color.GREEN);
-					}
-				});
-				
-
-				PlivingRoom.setBackground(Color.WHITE);
-				PlivingRoom.setVisible(true);
-				setDefaultCloseOperation(EXIT_ON_CLOSE);
-			}
-		});
+		addAction(livingRoom, "Living Room");
 		//******************************************************************************************************************
 		
 		//2
 		Kitchen = new JButton();
 		Kitchen.setIcon(new ImageIcon("C:\\Users\\Dean\\workspace\\Chores\\img\\kitchen.jpg"));
-		pan.add(Kitchen);
+		wholeGrid.add(Kitchen);
+		
+		addAction(Kitchen, "Kitchen");
 		//******************************************************************************************************************
 		
 		//3
 		DinningRoom = new JButton();
 		DinningRoom.setIcon(new ImageIcon("C:\\Users\\Dean\\workspace\\Chores\\img\\DinningRoom.jpg"));
-		pan.add(DinningRoom);
+		wholeGrid.add(DinningRoom);
+		
+		addAction(DinningRoom, "Dinning Room");
 		//******************************************************************************************************************
 		
 		//4		
 		Bathroom = new JButton();
 		Bathroom.setIcon(new ImageIcon("C:\\Users\\Dean\\workspace\\Chores\\img\\Bathroom.jpg"));
-		pan.add(Bathroom);
+		wholeGrid.add(Bathroom);
+		
+		addAction(Bathroom, "Bathroom");
 		//******************************************************************************************************************
 		
 		//5		
 		GrandparentsB = new JButton();
 		GrandparentsB.setIcon(new ImageIcon("C:\\Users\\Dean\\workspace\\Chores\\img\\GrandparentsB.jpg"));
-		pan.add(GrandparentsB);
+		wholeGrid.add(GrandparentsB);
+		
+		addAction(GrandparentsB, "Grandparents Bathroom");
 		//******************************************************************************************************************
 
 		//6
 		Hallway = new JButton();
 		Hallway.setIcon(new ImageIcon("C:\\Users\\Dean\\workspace\\Chores\\img\\Hallway.jpg"));
-		pan.add(Hallway);
+		wholeGrid.add(Hallway);
+		
+		addAction(Hallway, "Hallway");
 		//******************************************************************************************************************
 		
 		//7
 		FrontYard = new JButton();
 		FrontYard.setIcon(new ImageIcon("C:\\Users\\Dean\\workspace\\Chores\\img\\FrontYard.jpg"));
-		pan.add(FrontYard);
+		wholeGrid.add(FrontYard);
+		
+		addAction(FrontYard, "Front Yard");
 		//******************************************************************************************************************
 
 		//8
 		BackYard = new JButton();
 		BackYard.setIcon(new ImageIcon("C:\\Users\\Dean\\workspace\\Chores\\img\\BackYard.jpg"));
-		pan.add(BackYard);
+		wholeGrid.add(BackYard);
+		
+		addAction(BackYard, "Backyard");
 		//******************************************************************************************************************
 
 		//9
 		Pool = new JButton();
 		Pool.setIcon(new ImageIcon("C:\\Users\\Dean\\workspace\\Chores\\img\\Pool.jpg"));
-		pan.add(Pool);
+		wholeGrid.add(Pool);
+		
+		addAction(Pool, "Pool");
 		//******************************************************************************************************************
 
 		//10
 		Vehicles = new JButton();
 		Vehicles.setIcon(new ImageIcon("C:\\Users\\Dean\\workspace\\Chores\\img\\Vehicles.jpg"));
-		pan.add(Vehicles);
+		wholeGrid.add(Vehicles);
+		
+		addAction(Vehicles, "Vehicles");
 		//******************************************************************************************************************
 
 		//11
 		Patio = new JButton();
 		Patio.setIcon(new ImageIcon("C:\\Users\\Dean\\workspace\\Chores\\img\\Patio.jpg"));
-		pan.add(Patio);
+		wholeGrid.add(Patio);
+		
+		addAction(Patio, "Patio");
 		//******************************************************************************************************************
 		
 		//12
 		DogsRoom = new JButton();
 		DogsRoom.setIcon(new ImageIcon("C:\\Users\\Dean\\workspace\\Chores\\img\\DogsRoom.jpg"));
-		pan.add(DogsRoom);
+		wholeGrid.add(DogsRoom);
+		
+		addAction(DogsRoom, "Dogs Room");
 		//******************************************************************************************************************
 		
 		
-		add(pan);
+		add(wholeGrid);
 		validate();
-		pan.setBackground(Color.BLACK);
-		pan.setLayout(new GridLayout(2,6));
+		wholeGrid.setBackground(Color.BLACK);
+		wholeGrid.setLayout(new GridLayout(2,6));
 
 		
 		setTitle("Chores of Exotic Adventures");
@@ -183,6 +155,71 @@ public class ChoreProgram extends JFrame
 		
 	}
 
+	public void addAction(JButton room, String roomName)
+	{
+		room.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent arg0) 
+			{	
+				// Want to load in Defaults From .txt and then 
+				// when instantiating the text field compare default 
+				// text to valid values and depending on what it is 
+				// disable it and set the right color
+				
+				// Set old panel visibility to false 
+				wholeGrid.setVisible(false);
+				JPanel jpantemp = new JPanel();
+				JPanel tablep = new JPanel();
+				JLabel temp = new JLabel(roomName);
+				
+				jpantemp.add(temp);
+				jpantemp.setBackground(Color.WHITE);
+				jpantemp.setVisible(true);
+				add(jpantemp, BorderLayout.NORTH);
+				
+				// Main Menu Back Button
+				JButton done = new JButton("Back");
+				jpantemp.add(done);
+				done.addActionListener(new ActionListener()
+				{
+					public void actionPerformed(ActionEvent arg0) 
+					{
+						jpantemp.setVisible(false);
+						tablep.setVisible(false);
+						wholeGrid.setVisible(true);
+					}
+				});
+				addChoreTable(roomName, tablep);
+			}
+		});
+	}
+	
+	public void addChoreTable(String roomName, JPanel tablep)
+	{
+		//////////////////////////////////////////////////////////////////////////////////////
+		/////////////////////////////////////////////////////////////////////////////////////
+		// Adding Chores here should be put in a separate method but for now I am putting here 
+		String columns[] = {"Chore", "Cost", "Status", "Description"};
+		String data[][] = {{"clean", "20", "false", "Do This and that and this"}, 
+						   {"mop", "100", "True", "Do This and that and this"}, 
+						   {"sweep", "200", "False", "Do This and that and this"}};
+		JTable table = new JTable(data, columns)
+		{
+		public boolean isCellEditable(int data, int columns)
+		{
+		return false;
+		}
+		};
+		tablep.setVisible(true);
+		table.setPreferredScrollableViewportSize(new Dimension(742, 50));
+		table.setFillsViewportHeight(true);
+		JScrollPane jt = new JScrollPane(table);
+		tablep.add(jt);
+		tablep.setBackground(Color.WHITE);
+		add(tablep, BorderLayout.CENTER);
+		
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+	}
 	public static void main(String[] args) 
 	{
 		ChoreProgram choreAdventure = new ChoreProgram();
