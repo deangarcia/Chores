@@ -11,6 +11,8 @@ import java.awt.GridLayout;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -20,6 +22,11 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+
+import jxl.Cell;
+import jxl.Sheet;
+import jxl.Workbook;
+import jxl.read.biff.BiffException;
 
 
 public class ChoreProgram extends JFrame
@@ -49,7 +56,7 @@ public class ChoreProgram extends JFrame
 		livingRoom.setIcon(new ImageIcon("C:\\Users\\Dean\\workspace\\Chores\\img\\livingRoom.jpg"));
 		wholeGrid.add(livingRoom);
 		
-		addAction(livingRoom, "Living Room");
+		addAction(livingRoom, Room.LIVINGROOM);
 		//******************************************************************************************************************
 		
 		//2
@@ -57,7 +64,7 @@ public class ChoreProgram extends JFrame
 		Kitchen.setIcon(new ImageIcon("C:\\Users\\Dean\\workspace\\Chores\\img\\kitchen.jpg"));
 		wholeGrid.add(Kitchen);
 		
-		addAction(Kitchen, "Kitchen");
+		addAction(Kitchen, Room.KITCHEN);
 		//******************************************************************************************************************
 		
 		//3
@@ -65,7 +72,7 @@ public class ChoreProgram extends JFrame
 		DinningRoom.setIcon(new ImageIcon("C:\\Users\\Dean\\workspace\\Chores\\img\\DinningRoom.jpg"));
 		wholeGrid.add(DinningRoom);
 		
-		addAction(DinningRoom, "Dinning Room");
+		addAction(DinningRoom, Room.DINNINGROOM);
 		//******************************************************************************************************************
 		
 		//4		
@@ -73,7 +80,7 @@ public class ChoreProgram extends JFrame
 		Bathroom.setIcon(new ImageIcon("C:\\Users\\Dean\\workspace\\Chores\\img\\Bathroom.jpg"));
 		wholeGrid.add(Bathroom);
 		
-		addAction(Bathroom, "Bathroom");
+		addAction(Bathroom, Room.BATHROOM);
 		//******************************************************************************************************************
 		
 		//5		
@@ -81,7 +88,7 @@ public class ChoreProgram extends JFrame
 		GrandparentsB.setIcon(new ImageIcon("C:\\Users\\Dean\\workspace\\Chores\\img\\GrandparentsB.jpg"));
 		wholeGrid.add(GrandparentsB);
 		
-		addAction(GrandparentsB, "Grandparents Bathroom");
+		addAction(GrandparentsB, Room.GRANDMASBATHROOM);
 		//******************************************************************************************************************
 
 		//6
@@ -89,7 +96,7 @@ public class ChoreProgram extends JFrame
 		Hallway.setIcon(new ImageIcon("C:\\Users\\Dean\\workspace\\Chores\\img\\Hallway.jpg"));
 		wholeGrid.add(Hallway);
 		
-		addAction(Hallway, "Hallway");
+		addAction(Hallway, Room.HALLWAY);
 		//******************************************************************************************************************
 		
 		//7
@@ -97,7 +104,7 @@ public class ChoreProgram extends JFrame
 		FrontYard.setIcon(new ImageIcon("C:\\Users\\Dean\\workspace\\Chores\\img\\FrontYard.jpg"));
 		wholeGrid.add(FrontYard);
 		
-		addAction(FrontYard, "Front Yard");
+		addAction(FrontYard, Room.FRONTYARD);
 		//******************************************************************************************************************
 
 		//8
@@ -105,7 +112,7 @@ public class ChoreProgram extends JFrame
 		BackYard.setIcon(new ImageIcon("C:\\Users\\Dean\\workspace\\Chores\\img\\BackYard.jpg"));
 		wholeGrid.add(BackYard);
 		
-		addAction(BackYard, "Backyard");
+		addAction(BackYard, Room.BACKYARD);
 		//******************************************************************************************************************
 
 		//9
@@ -113,7 +120,7 @@ public class ChoreProgram extends JFrame
 		Pool.setIcon(new ImageIcon("C:\\Users\\Dean\\workspace\\Chores\\img\\Pool.jpg"));
 		wholeGrid.add(Pool);
 		
-		addAction(Pool, "Pool");
+		addAction(Pool, Room.POOL);
 		//******************************************************************************************************************
 
 		//10
@@ -121,7 +128,7 @@ public class ChoreProgram extends JFrame
 		Vehicles.setIcon(new ImageIcon("C:\\Users\\Dean\\workspace\\Chores\\img\\Vehicles.jpg"));
 		wholeGrid.add(Vehicles);
 		
-		addAction(Vehicles, "Vehicles");
+		addAction(Vehicles, Room.VEHICLES);
 		//******************************************************************************************************************
 
 		//11
@@ -129,7 +136,7 @@ public class ChoreProgram extends JFrame
 		Patio.setIcon(new ImageIcon("C:\\Users\\Dean\\workspace\\Chores\\img\\Patio.jpg"));
 		wholeGrid.add(Patio);
 		
-		addAction(Patio, "Patio");
+		addAction(Patio, Room.PATIO);
 		//******************************************************************************************************************
 		
 		//12
@@ -137,7 +144,7 @@ public class ChoreProgram extends JFrame
 		DogsRoom.setIcon(new ImageIcon("C:\\Users\\Dean\\workspace\\Chores\\img\\DogsRoom.jpg"));
 		wholeGrid.add(DogsRoom);
 		
-		addAction(DogsRoom, "Dogs Room");
+		addAction(DogsRoom, Room.DOGSROOM);
 		//******************************************************************************************************************
 		
 		
@@ -155,7 +162,7 @@ public class ChoreProgram extends JFrame
 		
 	}
 
-	public void addAction(JButton room, String roomName)
+	public void addAction(JButton room, Room roomName)
 	{
 		room.addActionListener(new ActionListener()
 		{
@@ -170,7 +177,7 @@ public class ChoreProgram extends JFrame
 				wholeGrid.setVisible(false);
 				JPanel jpantemp = new JPanel();
 				JPanel tablep = new JPanel();
-				JLabel temp = new JLabel(roomName);
+				JLabel temp = new JLabel(roomName.getName());
 				
 				jpantemp.add(temp);
 				jpantemp.setBackground(Color.WHITE);
@@ -189,29 +196,57 @@ public class ChoreProgram extends JFrame
 						wholeGrid.setVisible(true);
 					}
 				});
-				addChoreTable(roomName, tablep);
+				try {
+					addChoreTable(roomName, tablep);
+				} catch (BiffException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		});
 	}
 	
-	public void addChoreTable(String roomName, JPanel tablep)
+	
+	public void addChoreTable(Room roomName, JPanel tablep) throws BiffException, IOException
 	{
 		//////////////////////////////////////////////////////////////////////////////////////
 		/////////////////////////////////////////////////////////////////////////////////////
 		// Adding Chores here should be put in a separate method but for now I am putting here 
-		String columns[] = {"Chore", "Cost", "Status", "Description"};
-		String data[][] = {{"clean", "20", "false", "Do This and that and this"}, 
-						   {"mop", "100", "True", "Do This and that and this"}, 
-						   {"sweep", "200", "False", "Do This and that and this"}};
+		File f = new File("C:\\Users\\Dean\\Google Drive\\asd\\Chores.xls");
+		
+		String columns[] = {"Chore", "Money Earned", "Description"};
+		String data[][]; //= {{"clean", "20", "false", "Do This and that and this"}, 
+						 //  {"mop", "100", "True", "Do This and that and this"}, 
+						 //  {"sweep", "200", "False", "Do This and that and this"}};
+		
+		Workbook wb;
+		wb = Workbook.getWorkbook(f);
+		Sheet s = wb.getSheet(roomName.getSheet());
+		int row = s.getRows();
+		int col = 3;
+		
+		data = new String[row][col]; 
+		for(int i = 1; i < row; i++)
+		{
+			for(int j = 0; j < col; j++)
+			{
+				Cell c = s.getCell(j,i);
+				data[i-1][j] = c.getContents();
+			}
+		}
+		
 		JTable table = new JTable(data, columns)
 		{
-		public boolean isCellEditable(int data, int columns)
-		{
-		return false;
-		}
+			public boolean isCellEditable(int data, int columns)
+			{
+				return false;
+			}
 		};
 		tablep.setVisible(true);
-		table.setPreferredScrollableViewportSize(new Dimension(742, 50));
+		table.setPreferredScrollableViewportSize(new Dimension(742, 459));
 		table.setFillsViewportHeight(true);
 		JScrollPane jt = new JScrollPane(table);
 		tablep.add(jt);
